@@ -1,10 +1,16 @@
 FROM ubuntu:latest
-RUN apt-get update -y
-RUN apt-get install -y python-pip python-dev build-essential
+ENV LANG_TOOL_VERSION 3.8
+ADD https://www.languagetool.org/download/LanguageTool-$LANG_TOOL_VERSION.zip /LanguageTool-$LANG_TOOL_VERSION.zip
+
+RUN apt-get update -yq && \
+    apt-get install -yq python3-pip python3-dev build-essential curl unzip openjdk-8-jre-headless && \
+    unzip /LanguageTool-$LANG_TOOL_VERSION.zip && \
+    rm /LanguageTool-$LANG_TOOL_VERSION.zip
+
 COPY . /opt/app
 WORKDIR /opt/app
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
 
 RUN useradd -ms /bin/bash thisorthat
 USER thisorthat

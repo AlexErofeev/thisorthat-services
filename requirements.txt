@@ -2,5 +2,5 @@ gunicorn
 Jinja2
 Werkzeug
 distribute
-wsgiref
 Flask>=0.12
+language-check
